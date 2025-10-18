@@ -1,5 +1,5 @@
 
-```markdown
+
 # Notes CLI
 
 A simple command-line interface (CLI) tool to manage your notes.
