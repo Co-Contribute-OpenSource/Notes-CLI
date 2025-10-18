@@ -1,1 +1,1 @@
-# Notes-CLI
+# Notes CLI Project
