@@ -1,3 +1,5 @@
+# def
+
 from notes_cli import storage
 
 def add_note(note_text):
