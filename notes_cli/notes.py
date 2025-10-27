@@ -132,7 +132,6 @@ def import_notes(input_file="imported_notes.txt"):
     storage.save_notes(notes_list)
     print(f"📥 Imported {len(lines)} notes successfully.")
 
-
 def clear_notes():
     """
     Delete all notes after confirmation.
