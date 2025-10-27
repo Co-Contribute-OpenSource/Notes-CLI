@@ -34,7 +34,6 @@ def search_notes(keyword):
     """
     notes_list = storage.load_notes()
     keyword = keyword.lower()
-
     matched = [note for note in notes_list if keyword in note['note'].lower()]
 
     if not matched:
@@ -44,3 +43,18 @@ def search_notes(keyword):
     print(f"🔍 Search results for '{keyword}':")
     for note in matched:
         print(f"{note['id']}: {note['note']}")
+
+
+def delete_note(note_id):
+    """
+    Delete a note by its ID.
+    """
+    notes_list = storage.load_notes()
+    updated_list = [note for note in notes_list if note['id'] != note_id]
+
+    if len(updated_list) == len(notes_list):
+        print("❌ Note not found.")
+        return
+
+    storage.save_notes(updated_list)
+    print(f"🗑️  Note with ID {note_id} deleted successfully.")
