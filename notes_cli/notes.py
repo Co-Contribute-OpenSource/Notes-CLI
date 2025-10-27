@@ -58,3 +58,21 @@ def delete_note(note_id):
 
     storage.save_notes(updated_list)
     print(f"🗑️  Note with ID {note_id} deleted successfully.")
+
+
+def export_notes(output_file="exported_notes.txt"):
+    """
+    Export all saved notes to a text file.
+    """
+    notes_list = storage.load_notes()
+    if not notes_list:
+        print("📭 No notes to export.")
+        return
+
+    with open(output_file, "w") as f:
+        for note in notes_list:
+            f.write(f"{note['id']}: {note['note']}\n")
+
+    print(f"✅ Notes exported successfully to {output_file}")
+
+

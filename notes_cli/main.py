@@ -25,6 +25,9 @@ def main():
     # delete
     parser_delete = subparsers.add_parser("delete", help="Delete a note by ID")
     parser_delete.add_argument("id", type=int, help="The ID of the note to delete")
+    # export
+    subparsers.add_parser("export", help="Export all notes to a text file")
+
 
     args = parser.parse_args()
 
@@ -36,6 +39,8 @@ def main():
         notes.search_notes(args.keyword)
     elif args.command == "delete":
         notes.delete_note(args.id)
+    elif args.command == "export":
+        notes.export_notes()
     else:
         parser.print_help()
 
