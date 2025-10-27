@@ -28,6 +28,12 @@ def main():
     # export
     subparsers.add_parser("export", help="Export all notes to a text file")
 
+    # update
+    update_parser = subparsers.add_parser("update", help="Update a note by its ID")
+    update_parser.add_argument("note_id", type=int, help="ID of the note to update")
+    update_parser.add_argument("new_text", help="New text for the note")
+
+
 
     args = parser.parse_args()
 
