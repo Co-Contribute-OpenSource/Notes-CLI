@@ -65,3 +65,29 @@ def update_note(note_id, new_text):
             print(f"✏️ Note {note_id} updated successfully.")
             return
     print("❌ Note not found.")
+
+def import_notes(input_file="imported_notes.txt"):
+    """
+    Import notes from a text file. Each line becomes a new note.
+    """
+    if not os.path.exists(input_file):
+        print("❌ File not found.")
+        return
+
+    with open(input_file, "r") as f:
+        lines = [line.strip() for line in f.readlines() if line.strip()]
+
+    if not lines:
+        print("⚠️ No notes found in file.")
+        return
+
+    notes_list = storage.load_notes()
+    next_id = max([note["id"] for note in notes_list], default=0) + 1
+
+    for line in lines:
+        notes_list.append({"id": next_id, "note": line})
+        next_id += 1
+
+    storage.save_notes(notes_list)
+    print(f"📥 Imported {len(lines)} notes successfully.")
+
