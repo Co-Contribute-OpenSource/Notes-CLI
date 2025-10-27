@@ -1,10 +1,6 @@
 from notes_cli import storage
 
 def add_note(note_text):
-    """
-    Add a new note to the system.
-    Generates a unique ID, saves to notes.json, and prints success message.
-    """
     notes_list = storage.load_notes()
     note_id = max([note['id'] for note in notes_list], default=0) + 1
     new_note = {"id": note_id, "note": note_text}
@@ -14,65 +10,58 @@ def add_note(note_text):
 
 
 def list_notes():
-    """
-    Display all saved notes in a formatted way.
-    """
     notes_list = storage.load_notes()
-
     if not notes_list:
         print("📭 No notes found.")
         return
-
     print("🗒️  Your Notes:")
     for note in notes_list:
         print(f"{note['id']}: {note['note']}")
 
 
 def search_notes(keyword):
-    """
-    Search for notes containing the keyword (case-insensitive).
-    """
     notes_list = storage.load_notes()
     keyword = keyword.lower()
     matched = [note for note in notes_list if keyword in note['note'].lower()]
-
     if not matched:
         print("❌ No matching notes found.")
         return
-
     print(f"🔍 Search results for '{keyword}':")
     for note in matched:
         print(f"{note['id']}: {note['note']}")
 
 
 def delete_note(note_id):
-    """
-    Delete a note by its ID.
-    """
     notes_list = storage.load_notes()
-    updated_list = [note for note in notes_list if note['id'] != note_id]
-
-    if len(updated_list) == len(notes_list):
-        print("❌ Note not found.")
-        return
-
-    storage.save_notes(updated_list)
-    print(f"🗑️  Note with ID {note_id} deleted successfully.")
+    for note in notes_list:
+        if note["id"] == note_id:
+            notes_list.remove(note)
+            storage.save_notes(notes_list)
+            print(f"🗑️ Note with ID {note_id} deleted successfully.")
+            return
+    print("❌ Note not found.")
 
 
 def export_notes(output_file="exported_notes.txt"):
-    """
-    Export all saved notes to a text file.
-    """
     notes_list = storage.load_notes()
     if not notes_list:
         print("📭 No notes to export.")
         return
-
     with open(output_file, "w") as f:
         for note in notes_list:
             f.write(f"{note['id']}: {note['note']}\n")
-
     print(f"✅ Notes exported successfully to {output_file}")
 
 
+def update_note(note_id, new_text):
+    """
+    Update an existing note by ID.
+    """
+    notes_list = storage.load_notes()
+    for note in notes_list:
+        if note["id"] == note_id:
+            note["note"] = new_text
+            storage.save_notes(notes_list)
+            print(f"✏️ Note {note_id} updated successfully.")
+            return
+    print("❌ Note not found.")
