@@ -91,3 +91,14 @@ def import_notes(input_file="imported_notes.txt"):
     storage.save_notes(notes_list)
     print(f"📥 Imported {len(lines)} notes successfully.")
 
+def clear_notes():
+    """
+    Delete all notes after confirmation.
+    """
+    confirm = input("⚠️ This will delete all notes. Type 'yes' to confirm: ")
+    if confirm.lower() == "yes":
+        storage.save_notes([])
+        print("🧹 All notes deleted successfully.")
+    else:
+        print("❎ Action cancelled.")
+
